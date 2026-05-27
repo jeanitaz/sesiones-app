@@ -3,6 +3,8 @@ import Login from '../Pages/Login';
 import Register from '../Pages/Register';
 import Home from '../Pages/Home';
 import { useAuth } from '../context/AuthContext';
+import Pedidos from '../Pages/Pedidos';
+import Perfil from '../Pages/Perfil';
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, isLoading } = useAuth();
@@ -22,6 +24,8 @@ export default function AppRoutes() {
       <Route path="/" element={<PublicRoute><Login /></PublicRoute>} />
       <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
       <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
+      <Route path="/pedidos" element={<PrivateRoute><Pedidos /></PrivateRoute>} />
+      <Route path="/perfil" element={<PrivateRoute><Perfil /></PrivateRoute>} />
     </Routes>
   );
 }

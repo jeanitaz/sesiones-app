@@ -1,5 +1,5 @@
 import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Home() {
   const { user, logout } = useAuth();
@@ -46,8 +46,11 @@ export default function Home() {
           cursor: 'pointer',
         }}
       >
+        
         Cerrar sesión
       </button>
+      <Link to="/pedidos">Mis Pedidos</Link>
+      <Link to="/perfil">Perfil</Link>
     </div>
   );
 }

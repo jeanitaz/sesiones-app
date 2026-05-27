@@ -113,7 +113,6 @@ export default function Login() {
             )}
           </button>
         </form>
-
         <p className="auth-switch">
           ¿No tienes cuenta?{' '}
           <Link to="/register" className="auth-link">Regístrate aquí</Link>

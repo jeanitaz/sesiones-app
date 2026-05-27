@@ -9,7 +9,7 @@ export interface RegisterData {
   identificacion: string;
   tipo_identificacion: 'CC' | 'CE' | 'NIT' | 'PASAPORTE';
   sexo: 'M' | 'F' | 'OTRO';
-  fecha_nacimiento: string; // formato YYYY-MM-DD
+  fecha_nacimiento: string; 
   telefono: string;
   email: string;
   direccion: string;
@@ -78,6 +78,14 @@ export async function registerCliente(data: RegisterData): Promise<AuthResponse>
   return handleResponse<AuthResponse>(res);
 }
 
+export async function profile(): Promise<AuthResponse> {
+  const res = await fetch(`${BASE_URL}/cliente/profile`, {
+    method: 'GET',
+    headers: authHeaders(),
+  });
+  return handleResponse<AuthResponse>(res);
+}
+
 export async function loginCliente(data: LoginData): Promise<AuthResponse> {
   const res = await fetch(`${BASE_URL}/cliente/login`, {
     method: 'POST',
@@ -108,3 +116,33 @@ export async function logoutCliente(): Promise<void> {
     console.error('Backend logout request failed:', error);
   }
 }
+
+export interface PedidoData {
+  cliente_id: string;
+  paquete_id: string;
+  fecha_inicio_plan: string;
+  fecha_fin_plan: string;
+}
+
+export async function pedidos(data: PedidoData): Promise<any> {
+  const res = await fetch(`${BASE_URL}/cliente/pedidos`, {
+    method: 'POST',
+    headers: authHeaders(),
+    body: JSON.stringify(data),
+  });
+  return handleResponse<any>(res);
+}
+
+export async function getPedidos(): Promise<any> {
+  try {
+    const res = await fetch(`${BASE_URL}/cliente/pedidos`, {
+      method: 'GET',
+      headers: authHeaders(),
+    });
+    return handleResponse<any>(res);
+  } catch (error) {
+    console.error('[API Error Details]:', error);
+    throw error;
+  }
+}
+

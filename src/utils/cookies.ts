@@ -9,8 +9,9 @@ export function setCookie(name: string, value: string, days?: number): void {
     date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
     expires = '; expires=' + date.toUTCString();
   }
-  // Secure by default, SameSite=Lax for normal SPA behavior
-  document.cookie = `${name}=${encodeURIComponent(value)}${expires}; path=/; SameSite=Lax; Secure`;
+  const isSecure = typeof window !== 'undefined' && window.location.protocol === 'https:';
+  // Secure by default on HTTPS, omitted on HTTP for local development compatibility
+  document.cookie = `${name}=${encodeURIComponent(value)}${expires}; path=/; SameSite=Lax${isSecure ? '; Secure' : ''}`;
 }
 
 export function getCookie(name: string): string | null {
@@ -26,5 +27,6 @@ export function getCookie(name: string): string | null {
 }
 
 export function eraseCookie(name: string): void {
-  document.cookie = `${name}=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT; SameSite=Lax; Secure`;
+  const isSecure = typeof window !== 'undefined' && window.location.protocol === 'https:';
+  document.cookie = `${name}=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT; SameSite=Lax${isSecure ? '; Secure' : ''}`;
 }
